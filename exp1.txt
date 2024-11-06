@@ -1,0 +1,123 @@
+/*Roll no:11
+
+Name:Manav Mangesh Uttekar
+
+Title: Write a Python program to compute following operations on String:
+a)	To display word with the longest length
+b)	To determines the frequency of occurrence of particular character in the string
+c)	To check whether given string is palindrome or not
+d)	To display index of first appearance of the substring
+e)	To count the occurrences of each word in a given string
+
+*/
+def count_words(x):
+    words = x.split()
+    return words
+
+def largest_word(words):
+    return max(words, key=len) 
+
+def count_occurrences(x, char):
+    return x.count(char)
+
+def is_palindrome(x):
+    return x == x[::-1]
+
+def at_index(substring, x):
+    return x.find(substring)
+
+if __name__ == "__main__":
+    x = input("Enter the string: ")
+    
+    while True:
+        print("\n1. Count words")
+        print("2. Find the largest word")
+        print("3. Count occurrences of a character")
+        print("4. Check if palindrome")
+        print("5. Find substring index")
+        print("6. Exit")
+        
+        choice = int(input("Choose an option: "))
+        
+        if choice == 1:
+            words = count_words(x)
+            print("Words:", words)
+            print("Number of words:", len(words))
+        elif choice == 2:
+            words = count_words(x)
+            print("The largest word is:", largest_word(words))
+        elif choice == 3:
+            char = input("Enter character to count: ")
+            print("Number of occurrences:", count_occurrences(x, char))
+        elif choice == 4:
+            print("It is a palindrome" if is_palindrome(x) else "It is not a palindrome")
+        elif choice == 5:
+            substring = input("Enter the substring to find: ")
+            print("Is at index:", at_index(substring, x))
+        elif choice == 6:
+            print("Exiting.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+O/P:
+
+Enter the string: A man a plan a canal Panama
+
+1. Count words
+2. Find the largest word
+3. Count occurrences of a character
+4. Check if palindrome
+5. Find substring index
+6. Exit
+Choose an option: 1
+Words: ['A', 'man', 'a', 'plan', 'a', 'canal', 'Panama']
+Number of words: 7
+
+1. Count words
+2. Find the largest word
+3. Count occurrences of a character
+4. Check if palindrome
+5. Find substring index
+6. Exit
+Choose an option: 2
+The largest word is: canal
+
+1. Count words
+2. Find the largest word
+3. Count occurrences of a character
+4. Check if palindrome
+5. Find substring index
+6. Exit
+Choose an option: 3
+Enter character to count: a
+Number of occurrences: 6
+
+1. Count words
+2. Find the largest word
+3. Count occurrences of a character
+4. Check if palindrome
+5. Find substring index
+6. Exit
+Choose an option: 4
+It is not a palindrome
+
+1. Count words
+2. Find the largest word
+3. Count occurrences of a character
+4. Check if palindrome
+5. Find substring index
+6. Exit
+Choose an option: 5
+Enter the substring to find: plan
+Is at index: 8
+
+1. Count words
+2. Find the largest word
+3. Count occurrences of a character
+4. Check if palindrome
+5. Find substring index
+6. Exit
+Choose an option: 6
+Exiting.
+

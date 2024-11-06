@@ -1,0 +1,75 @@
+/*
+Roll No:11
+Name:Manav Mangesh Uttekar
+
+Title: a) Write a Python program to store roll numbers of student in array who attended training program in random order. Write function for searching whether particular student attended training program or not, using Linear search and Sentinel search.
+*/
+
+def linear_search(rollno, student_search):
+    for i in range(len(rollno)):
+        if rollno[i] == student_search:
+            return i  # Return the index where the student is found
+    return -1  # If not found
+
+def sentinel_search(rollno, student_search):
+    n = len(rollno)
+    last = rollno[-1]  # Store the last element
+    rollno[-1] = student_search  # Set the sentinel
+    i = 0
+    while rollno[i] != student_search:
+        i += 1
+    rollno[-1] = last  # Restore the last element
+    if i < n - 1 or rollno[-1] == student_search:
+        return i  # Return the index where the student is found
+    return -1  # If not found
+
+# Input: Roll numbers of students in random order
+n = int(input("Enter the number of students who attended the training: "))
+roll_numbers = []
+
+# Taking roll numbers as input from the user
+for i in range(n):
+    roll = int(input(f"Enter roll number for student {i + 1}: "))
+    roll_numbers.append(roll)
+
+# Take input for the roll number to search
+roll_to_search = int(input("Enter roll number to search: "))
+
+# Select search method
+print("Choose search method:")
+print("1. Linear Search")
+print("2. Sentinel Search")
+choice = int(input("Enter your choice: "))
+
+# Perform search based on the choice
+if choice == 1:
+    result = linear_search(roll_numbers, roll_to_search)
+    if result != -1:
+        print(f"Roll number {roll_to_search} found using Linear Search at index {result}.")
+    else:
+        print(f"Roll number {roll_to_search} not found using Linear Search.")
+elif choice == 2:
+    result = sentinel_search(roll_numbers, roll_to_search)
+    if result != -1:
+        print(f"Roll number {roll_to_search} found using Sentinel Search at index {result}.")
+    else:
+        print(f"Roll number {roll_to_search} not found using Sentinel Search.")
+else:
+    print("Invalid choice. Please select either 1 or 2.")
+
+
+O/P:
+
+Enter the number of students who attended the training: 5
+Enter roll number for student 1: 101
+Enter roll number for student 2: 202
+Enter roll number for student 3: 303
+Enter roll number for student 4: 404
+Enter roll number for student 5: 505
+Enter roll number to search: 303
+Choose search method:
+1. Linear Search
+2. Sentinel Search
+Enter your choice: 1
+Roll number 303 found using Linear Search at index 2.
+

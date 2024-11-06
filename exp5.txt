@@ -1,0 +1,71 @@
+/*
+Roll No:11
+Name:Manav Mangesh Uttekar
+
+Title: Write a Python program to store first year percentage of students in array. Write function for sorting array of floating point numbers in ascending order using
+A)Selection Sort
+B)Bubble sort and display top five scores.
+*/
+
+def fy_student(n):
+    marks = []
+    print("Enter the marks for the students:")
+    for i in range(n):
+        mark = float(input(f"Student {i + 1}: "))
+        marks.append(mark)
+    return marks
+
+def bubble_sort(arr):
+    b = len(arr)
+    for i in range(b):
+        for j in range(0, b - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+def selection_sort(arr):
+    b = len(arr)
+    for i in range(b):
+        min_index = i
+        for j in range(i + 1, b):
+            if arr[j] < arr[min_index]:
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+    return arr
+
+if __name__ == "__main__":
+    n = int(input("Enter the number of students: "))
+    marks = fy_student(n)
+    
+    print("Choose sorting method:")
+    print("1. Bubble Sort")
+    print("2. Selection Sort")
+    choice = int(input("Enter your choice: "))
+    
+    # Emulate switch-case using if-elif
+    if choice == 1:
+        sorted_marks = bubble_sort(marks.copy())
+        print("Sorted marks (bubble sort):", sorted_marks)
+        print("Highest marks to lowest marks (bubble sort):", sorted_marks[::-1])
+    elif choice == 2:
+        sorted_marks = selection_sort(marks.copy())
+        print("Sorted marks (selection sort):", sorted_marks)
+        print("Highest marks to lowest marks (selection sort):", sorted_marks[::-1])
+    else:
+        print("Invalid choice. Please select either 1 or 2.")
+
+
+O/p:
+Enter the number of students: 5
+Enter the marks for the students:
+Student 1: 78
+Student 2: 92
+Student 3: 56
+Student 4: 89
+Student 5: 65
+Choose sorting method:
+1. Bubble Sort
+2. Selection Sort
+Enter your choice: 1
+Sorted marks (bubble sort): [56.0, 65.0, 78.0, 89.0, 92.0]
+Highest marks to lowest marks (bubble sort): [92.0, 89.0, 78.0, 65.0, 56.0]

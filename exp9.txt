@@ -1,0 +1,39 @@
+/*
+Roll No:11
+Name:Manav Mangesh Uttekar
+
+Title: Implement C++ program for expression conversion as infix to postfix and its evaluation using stack based on given conditions:
+1. Operands and operator, both must be single character.
+2. Input Postfix expression must be in a desired format.
+Only '+', '-', '*' and '/ ' operators are expected
+*/
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+bool isBalanced(const string& expr) {
+    stack<char> s;
+    for (char ch : expr) {
+        if (ch == '(' || ch == '{' || ch == '[') s.push(ch);
+        else if ((ch == ')' && !s.empty() && s.top() == '(') ||
+                 (ch == '}' && !s.empty() && s.top() == '{') ||
+                 (ch == ']' && !s.empty() && s.top() == '[')) s.pop();
+        else if (ch == ')' || ch == '}' || ch == ']') 
+        return false;
+    }
+    return s.empty();
+}
+int main() {
+    string expr;
+    cout << "Enter an expression: ";
+    getline(cin, expr);
+    cout << (isBalanced(expr) ? "Well parenthesized.\n" : "Not well parenthesized.\n");
+    return 0;
+}
+O/p:
+Enter an expression: (a + b) * (c + d)
+Well parenthesized.
+Enter an expression: (a + b * (c + d)
+Not well parenthesized.
+

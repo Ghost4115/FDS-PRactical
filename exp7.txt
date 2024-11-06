@@ -1,0 +1,66 @@
+/*
+Roll No:11
+Name:Manav Mangesh Uttekar
+
+Title: Write a Python program to store third year percentage of students in array. Write function for sorting array of floating point numbers in ascending order using quick sort and display top five scores.
+*/
+
+def ty_student(n):
+    marks = []
+    print("Enter the marks of students:")
+    for i in range(n):
+        mark = float(input(f"Student {i+1}: "))
+        marks.append(mark)
+    return marks
+
+# Quick Sort functions
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+def quick_sort(arr, low, high):
+    if low < high:
+        pi = partition(arr, low, high)
+        quick_sort(arr, low, pi - 1)
+        quick_sort(arr, high, pi + 1)
+
+# Switch-case functionality using a dictionary (only for quick sort)
+def sort_students(choice, marks):
+    switch = {
+        1: quick_sort(marks, 0, len(marks) - 1)
+    }
+    return switch.get(choice, "Invalid choice")
+
+if __name__ == "__main__":
+    n = int(input("Enter the number of students: "))
+    marks = ty_student(n)
+
+    print("\nChoose a sorting method:")
+    print("1. Quick Sort")
+    choice = int(input("Enter your choice (1): "))
+
+    # Apply the sorting function based on the user's choice
+    sort_students(choice, marks)
+
+    print(f"Sorted marks: {marks}")
+
+O/P:
+Enter the number of students: 5
+Enter the marks of students:
+Student 1: 75.2
+Student 2: 88.5
+Student 3: 67.1
+Student 4: 92.3
+Student 5: 84.7
+
+Choose a sorting method:
+1. Quick Sort
+Enter your choice (1): 1
+Sorted marks: [67.1, 75.2, 84.7, 88.5, 92.3]
+

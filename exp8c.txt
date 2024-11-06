@@ -1,0 +1,169 @@
+/*
+Roll No:11
+Name:Manav Mangesh Uttekar
+
+Title: Write C++ program for storing appointment schedule for day. Appointments are booked randomly using linked list. Set start and end time and min and max duration for visit slot. Write functions for-
+A) Display free slots 
+B) Book appointment  
+C) Sort list based on time
+D)Cancel appointment ( check validity, time bounds, availability)
+E)Sort list based on time using pointer manipulation
+*/
+
+#include <iostream>
+using namespace std;
+
+struct Appointment {
+    int startTime;
+    int endTime;
+    Appointment* next;
+};
+
+class Schedule {
+    Appointment* head;
+
+public:
+    Schedule() : head(nullptr) {}
+
+    void bookAppointment(int startTime, int endTime) {
+        Appointment* newApp = new Appointment{startTime, endTime, nullptr};
+
+        if (!head || head->startTime > endTime) {
+            newApp->next = head;
+            head = newApp;
+            cout << "Appointment booked.\n";
+            return;
+        }
+
+        Appointment* temp = head;
+        while (temp->next && temp->next->startTime < startTime) {
+            temp = temp->next;
+        }
+
+        if (temp->endTime <= startTime && (!temp->next || temp->next->startTime >= endTime)) {
+            newApp->next = temp->next;
+            temp->next = newApp;
+            cout << "Appointment booked.\n";
+        } else {
+            delete newApp;
+            cout << "Slot not available.\n";
+        }
+    }
+
+    void displayAppointments() {
+        Appointment* temp = head;
+        if (!temp) {
+            cout << "No appointments scheduled.\n";
+            return;
+        }
+        while (temp) {
+            cout << "Appointment from " << temp->startTime << " to " << temp->endTime << endl;
+            temp = temp->next;
+        }
+    }
+
+    bool cancelAppointment(int startTime) {
+        if (!head) return false;
+
+        if (head->startTime == startTime) {
+            Appointment* toDelete = head;
+            head = head->next;
+            delete toDelete;
+            cout << "Appointment canceled.\n";
+            return true;
+        }
+
+        Appointment* temp = head;
+        while (temp->next && temp->next->startTime != startTime) {
+            temp = temp->next;
+        }
+
+        if (!temp->next) return false;
+
+        Appointment* toDelete = temp->next;
+        temp->next = toDelete->next;
+        delete toDelete;
+        cout << "Appointment canceled.\n";
+        return true;
+    }
+
+    ~Schedule() {
+        while (head) {
+            Appointment* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+};
+
+int main() {
+    Schedule schedule;
+    int choice, start, end;
+
+    while (true) {
+        cout << "\n1. Book Appointment\n2. Display Appointments\n3. Cancel Appointment\n4. Exit\nChoose: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter start and end time (HHMM format): ";
+                cin >> start >> end;
+                schedule.bookAppointment(start, end);
+                break;
+            case 2:
+                cout << "Scheduled Appointments:\n";
+                schedule.displayAppointments();
+                break;
+            case 3:
+                cout << "Enter start time of appointment to cancel: ";
+                cin >> start;
+                if (!schedule.cancelAppointment(start)) {
+                    cout << "Appointment not found.\n";
+                }
+                break;
+            case 4:
+                return 0;
+            default:
+                cout << "Invalid choice. Try again.\n";
+        }
+    }
+    return 0;
+}
+
+//o/p:
+
+1. Book Appointment
+2. Display Appointments
+3. Cancel Appointment
+4. Exit
+Choose: 1
+Enter start and end time (HHMM format): 1000 1100
+Appointment booked.
+
+1. Book Appointment
+2. Display Appointments
+3. Cancel Appointment
+4. Exit
+Choose: 1
+Enter start and end time (HHMM format): 1200 1300
+Appointment booked.
+
+1. Book Appointment
+2. Display Appointments
+3. Cancel Appointment
+4. Exit
+Choose: 2
+Scheduled Appointments:
+Appointment from 1000 to 1100
+Appointment from 1200 to 1300
+
+1. Book Appointment
+2. Display Appointments
+3. Cancel Appointment
+4. Exit
+Choose: 3
+Enter start time of appointment to cancel: 1000
+Appointment canceled.
+Scheduled Appointments:
+Appointment from 1200 to 1300
+

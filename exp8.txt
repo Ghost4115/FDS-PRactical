@@ -1,0 +1,187 @@
+/*
+Roll No:11
+Name:Manav Mangesh Uttekar
+
+Title: Department of Computer Engineering has student's club named 'Pinnacle Club'. Students of second, third and final year of department can be granted membership on request. Similarly one may cancel the membership of club. First node is reserved for president of club and last node is reserved for secretary of club. Write C++ program to maintain club member‘s information using singly linked list. Store student PRN and Name. Write functions to:
+a)Add and delete the members as well as president or even secretary.
+b)Compute total number of members of club
+c)Display members 
+d)Two linked lists exists for two divisions. Concatenate two lists
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Member {
+    string name, prn;
+    Member* next;
+};
+
+class Club {
+    Member* head; // Points to the first member (President)
+    Member* tail; // Points to the last member (Secretary)
+public:
+    Club() : head(nullptr), tail(nullptr) {}
+
+    // Add a member
+    void addMember(string name, string prn) {
+        Member* newMember = new Member{name, prn, nullptr};
+        if (!head) {
+            head = newMember; // First member is President
+            tail = newMember; // First member is also Secretary initially
+        } else {
+            tail->next = newMember; // Link new member to the end
+            tail = newMember; // Update tail to the new member
+        }
+        cout << "Member " << name << " added.\n";
+    }
+
+    // Delete a specific member by PRN
+    void deleteMember(string prn) {
+        Member *temp = head, *prev = nullptr;
+        // Search for the member
+        while (temp && temp->prn != prn) {
+            prev = temp;
+            temp = temp->next;
+        }
+    }
+    // Delete the President
+    void deletePresident() {
+        if (head) {
+            Member* temp = head;
+            head = head->next;
+            delete temp; // Free memory
+            cout << "President deleted.\n";
+            if (!head) tail = nullptr; // If the list is now empty
+        } else {
+            cout << "No members to delete.\n";
+        }
+    }
+    // Delete the Secretary
+    void deleteSecretary() {
+        if (tail) {
+            if (head == tail) { // If only one member exists
+                delete head;
+                head = tail = nullptr; // List is now empty
+                cout << "Secretary deleted.\n";
+            } else {
+                Member* temp = head;
+                while (temp->next != tail) {
+                    temp = temp->next;
+                }
+                delete tail; // Free memory
+                tail = temp; // Update tail to the new last member
+                tail->next = nullptr; // Last member's next is now null
+                cout << "Secretary deleted.\n";
+            }
+        } else {
+            cout << "No members to delete.\n";
+        }
+    }
+    // Concatenate another club's members into this club
+    void concatenate(Club& other) {
+        if (!head) {
+            head = other.head; // If current club is empty, set head to other club's head
+            tail = other.tail; // Update tail
+        } else {
+            tail->next = other.head; // Link the end of this club to the other club
+            if (other.tail) tail = other.tail; // Update tail
+        }
+        other.head = nullptr; // Clear the other club's members
+        other.tail = nullptr; // Clear the tail
+        cout << "Clubs concatenated.\n";
+    }
+    // Display all members
+    void displayMembers() {
+        if (!head) {
+            cout << "No members in the club.\n";
+            return;
+        }
+        cout << "Members in the club:\n";
+        for (Member* temp = head; temp; temp = temp->next) {
+            cout << "Name: " << temp->name << ", PRN: " << temp->prn << endl;
+        }
+    }
+    // Get total number of members
+    int totalMembers() {
+        int count = 0;
+        for (Member* temp = head; temp; temp = temp->next)
+            count++;
+        return count;
+    }
+};
+int main() {
+    Club club1, club2;
+    int choice;
+
+    do {
+        cout << "\n1. Add Member\n2. Delete Member\n3. Delete President\n4. Delete Secretary\n5. Display Members\n6. Total Members\n7. Concatenate Clubs\n8. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        string name, prn;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter name: ";
+                cin >> name;
+                cout << "Enter PRN: ";
+                cin >> prn;
+                club1.addMember(name, prn);
+                break;
+            case 2:
+                cout << "Enter PRN to delete: ";
+                cin >> prn;
+                club1.deleteMember(prn);
+                break;
+            case 3:
+                club1.deletePresident();
+                break;
+            case 4:
+                club1.deleteSecretary();
+                break;
+            case 5:
+                club1.displayMembers();
+                break;
+            case 6:
+                cout << "Total members: " << club1.totalMembers() << endl;
+                break;
+            case 7:
+                club1.concatenate(club2);
+                break;
+            case 8:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice! Try again.\n";
+        }
+    } while (choice != 8);
+    return 0;
+}
+
+O/p:
+1. Add Member
+2. Delete Member
+3. Delete President
+4. Delete Secretary
+5. Display Members
+6. Total Members
+7. Concatenate Clubs
+8. Exit
+Enter your choice: 1
+Enter name: Alice
+Enter PRN: PRN001
+Member Alice added.
+
+1. Add Member
+2. Delete Member
+3. Delete President
+4. Delete Secretary
+5. Display Members
+6. Total Members
+7. Concatenate Clubs
+8. Exit
+Enter your choice: 1
+Enter name: Bob
+Enter PRN: PRN002
+Member Bob added.

@@ -1,0 +1,85 @@
+/*
+Roll No:11
+Name:Manav Mangesh Uttekar
+
+Title: Write a Python program to store second year percentage of students in array. Write function for sorting array of floating point numbers in ascending order using
+A)Insertion sort
+B)Shell Sort and display top five scores
+*/
+
+
+def insertion_sort(rollno):
+    for i in range(1, len(rollno)):
+        key = rollno[i]
+        j = i - 1
+        while j >= 0 and key < rollno[j]:
+            rollno[j + 1] = rollno[j]
+            j -= 1
+        rollno[j + 1] = key
+
+def shell_sort(rollno):
+    gap = len(rollno) // 2
+    while gap > 0:
+        for i in range(gap, len(rollno)):
+            temp = rollno[i]
+            j = i
+            while j >= gap and rollno[j - gap] > temp:
+                rollno[j] = rollno[j - gap]
+                j -= gap
+            rollno[j] = temp
+        gap //= 2 
+
+def sort_percentages(percentages, choice):
+    if choice == 1:
+        shell_sort(percentages)
+        print("Sorted Percentages in Ascending Order (Shell Sort):", percentages)
+    elif choice == 2:
+        insertion_sort(percentages)
+        print("Sorted Percentages in Ascending Order (Insertion Sort):", percentages)
+    else:
+        print("Invalid choice. Please select either 1 or 2.")
+
+if __name__ == "__main__":
+    n = int(input("Enter number of students: "))
+    percentages = []
+    for i in range(n):
+        percentage = float(input(f"Enter percentage for student {i + 1}: "))
+        percentages.append(percentage)
+    
+    print("Choose Sorting Algorithm:")
+    print("1. Shell Sort")
+    print("2. Insertion Sort")
+    choice = int(input("Enter your choice (1 or 2): "))
+
+    # Emulate switch-case using if-elif
+    sort_percentages(percentages, choice)
+
+    # Display top 5 scores
+    print("Top 5 Scores:", sorted(percentages, reverse=True)[:5])
+
+O/P:
+
+Enter number of students: 5
+Enter percentage for student 1: 75.2
+Enter percentage for student 2: 88.5
+Enter percentage for student 3: 67.1
+Enter percentage for student 4: 92.3
+Enter percentage for student 5: 84.7
+Choose Sorting Algorithm:
+1. Shell Sort
+2. Insertion Sort
+Enter your choice (1 or 2): 1
+Sorted Percentages in Ascending Order (Shell Sort): [67.1, 75.2, 84.7, 88.5, 92.3]
+Top 5 Scores: [92.3, 88.5, 84.7, 75.2, 67.1]
+
+Enter number of students: 5
+Enter percentage for student 1: 75.2
+Enter percentage for student 2: 88.5
+Enter percentage for student 3: 67.1
+Enter percentage for student 4: 92.3
+Enter percentage for student 5: 84.7
+Choose Sorting Algorithm:
+1. Shell Sort
+2. Insertion Sort
+Enter your choice (1 or 2): 3
+Invalid choice. Please select either 1 or 2.
