@@ -8,39 +8,58 @@ Title: Pizza parlor accepting maximum M orders. Orders are served in first come 
 using namespace std;
 
 class CircularQueue {
-    int* orders;
-    int front, rear, maxSize;
+    int* orders;     // Array to store orders
+    int front, rear; // Front and rear pointers
+    int maxSize;     // Maximum size of the queue
 
 public:
+    // Constructor
     CircularQueue(int size) : maxSize(size), front(-1), rear(-1) {
-        orders = new int[maxSize];
+        orders = new int[maxSize]; // Dynamically allocate memory
     }
-    ~CircularQueue() { delete[] orders; }
 
-    bool isFull() { return (rear + 1) % maxSize == front; }
-    bool isEmpty() { return front == -1; }
+    // Destructor
+    ~CircularQueue() {
+        delete[] orders;
+    }
 
+    // Check if the queue is full
+    bool isFull() {
+        return (rear + 1) % maxSize == front;
+    }
+
+    // Check if the queue is empty
+    bool isEmpty() {
+        return front == -1;
+    }
+
+    // Add a new order to the queue
     void placeOrder(int order) {
         if (isFull()) {
-            cout << "Order queue is full!\n";
+            cout << "Order queue is full! Cannot place more orders.\n";
             return;
         }
-        rear = (rear + 1) % maxSize;
-        orders[rear] = order;
-        if (front == -1) front = 0;
+        rear = (rear + 1) % maxSize; // Update rear position
+        orders[rear] = order;       // Add order to queue
+        if (front == -1)            // If queue was empty
+            front = 0;
         cout << "Order placed: " << order << endl;
     }
 
+    // Serve the order at the front
     void serveOrder() {
         if (isEmpty()) {
             cout << "No orders to serve!\n";
             return;
         }
         cout << "Serving order: " << orders[front] << endl;
-        if (front == rear) front = rear = -1; // Queue becomes empty
-        else front = (front + 1) % maxSize;
+        if (front == rear)          // Only one order in the queue
+            front = rear = -1;      // Reset queue to empty state
+        else
+            front = (front + 1) % maxSize; // Move front to the next position
     }
 
+    // Display all current orders
     void displayOrders() {
         if (isEmpty()) {
             cout << "No current orders!\n";
@@ -49,11 +68,24 @@ public:
         cout << "Current orders: ";
         for (int i = front; ; i = (i + 1) % maxSize) {
             cout << orders[i] << " ";
-            if (i == rear) break;
+            if (i == rear) break; // Stop when the rear is reached
         }
         cout << endl;
     }
 };
+
+void displayPizzaMenu() {
+    cout << "\nAvailable Pizza Orders:\n";
+    cout << "101: Margherita Pizza\n";
+    cout << "202: Pepperoni Pizza\n";
+    cout << "303: BBQ Chicken Pizza\n";
+    cout << "404: Veggie Supreme Pizza\n";
+    cout << "505: Hawaiian Pizza\n";
+    cout << "606: Four Cheese Pizza\n";
+    cout << "707: Meat Lover's Pizza\n";
+    cout << "808: Paneer Tikka Pizza\n";
+    cout << "909: Mushroom Delight Pizza\n";
+}
 
 int main() {
     int maxOrders;
@@ -66,8 +98,10 @@ int main() {
     do {
         cout << "\n1. Place Order\n2. Serve Order\n3. Display Orders\n4. Exit\nEnter choice: ";
         cin >> choice;
+
         switch (choice) {
             case 1:
+                displayPizzaMenu(); // Show menu to the user
                 cout << "Enter order number: ";
                 cin >> order;
                 cq.placeOrder(order);
@@ -79,60 +113,33 @@ int main() {
                 cq.displayOrders();
                 break;
             case 4:
-                cout << "Exiting.\n";
+                cout << "Exiting program. Thank you!\n";
                 break;
             default:
-                cout << "Invalid choice.\n";
+                cout << "Invalid choice. Please try again.\n";
         }
     } while (choice != 4);
 
     return 0;
 }
-
-O/p:
-Enter maximum number of orders: 5
+O/P:
+Enter maximum number of orders: 2
 
 1. Place Order
 2. Serve Order
 3. Display Orders
 4. Exit
 Enter choice: 1
+
+Available Pizza Orders:
+101: Margherita Pizza
+202: Pepperoni Pizza
+303: BBQ Chicken Pizza
+404: Veggie Supreme Pizza
+505: Hawaiian Pizza
+606: Four Cheese Pizza
+707: Meat Lover's Pizza
+808: Paneer Tikka Pizza
+909: Mushroom Delight Pizza
 Enter order number: 101
 Order placed: 101
-
-1. Place Order
-2. Serve Order
-3. Display Orders
-4. Exit
-Enter choice: 1
-Enter order number: 102
-Order placed: 102
-
-1. Place Order
-2. Serve Order
-3. Display Orders
-4. Exit
-Enter choice: 3
-Current orders: 101 102
-
-1. Place Order
-2. Serve Order
-3. Display Orders
-4. Exit
-Enter choice: 2
-Serving order: 101
-
-1. Place Order
-2. Serve Order
-3. Display Orders
-4. Exit
-Enter choice: 3
-Current orders: 102
-
-1. Place Order
-2. Serve Order
-3. Display Orders
-4. Exit
-Enter choice: 4
-Exiting.
-
